@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Bomb from './IndexDrills.js';
+import Roulette from './IndexDrills.js';
 
-ReactDOM.render(<Bomb />, document.getElementById('root'));
+
+ReactDOM.render(<Roulette />, document.getElementById('root'));

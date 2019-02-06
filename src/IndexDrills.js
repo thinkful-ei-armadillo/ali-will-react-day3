@@ -41,8 +41,67 @@ class Bomb extends React.Component {
     }
 }
 
+
+
 class Roulette extends React.Component {
+    static defaultProps  = {
+        bulletInChamber: 8
+    };
+
+    state = {
+        chamber: null,
+        spinningTheChamber: false
+    };
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
+
+    componentDidMount() {
+        this.interval = setInterval(() => {
+            this.setState({
+            })}, 2000)
+      }
+    
+    // handler for trigger functionality
+    handleTrigger = () => {
+        this.setState({
+            spinningTheChamber: true,
+        })
+        this.timeout = setTimeout(() => {
+            const randomChamber = Math.ceil(Math.random() * 8)
+            console.log(randomChamber);
+    
+        this.setState(
+            {
+                chamber : randomChamber,
+                spinningTheChamber: false,
+            })
+        }, 2000)
+    }
+
+    renderDisplay() {
+        const { chamber, spinningTheChamber } = this.state
+        const { bulletInChamber } = this.props
+        if (spinningTheChamber) {
+          return 'spinning the chamber and pulling the trigger! ...'
+        } else if (chamber === bulletInChamber) {
+          return 'BANG!!!!!'
+        } else {
+          return `SAFE!`
+        }
+      }
+
+    render() {
+        return (
+        <div className='Roulette' id='root'>
+            <p>{this.renderDisplay()}</p>
+            <button onClick={this.handleTrigger}>Pull the trigger</button>
+        </div>
+        )
+    }
 }
+
 
 
 
