@@ -1,6 +1,8 @@
 import React from 'react';
 
 
+
+// ================ HELLO DRILL ======================
 class Hello extends React.Component {
     state = {
         who: 'world'
@@ -15,14 +17,14 @@ render() {
             <button onClick={() => this.setState({ who: 'react' })}>React</button>
             <button onClick={() => this.setState({ who: 'friend' })}>Friend</button>
         </div>
-    )
-}
+        )
+    }
 }
 
+// ================ BOMB DRILL ======================
 class Bomb extends React.Component {
         state = {
         count: 0,
-
     }
 
     componentDidMount() {
@@ -42,7 +44,7 @@ class Bomb extends React.Component {
 }
 
 
-
+// ================ ROULETTE DRILL ======================
 class Roulette extends React.Component {
     static defaultProps  = {
         bulletInChamber: 8
@@ -53,9 +55,6 @@ class Roulette extends React.Component {
         spinningTheChamber: false
     };
 
-    componentWillUnmount() {
-        clearTimeout(this.timeout)
-    }
 
     componentDidMount() {
         this.interval = setInterval(() => {
@@ -81,16 +80,21 @@ class Roulette extends React.Component {
     }
 
     renderDisplay() {
-        const { chamber, spinningTheChamber } = this.state
-        const { bulletInChamber } = this.props
-        if (spinningTheChamber) {
+        // const { chamber, spinningTheChamber } = this.state
+        // const { bulletInChamber } = this.props
+        if (this.state.spinningTheChamber) {
           return 'spinning the chamber and pulling the trigger! ...'
-        } else if (chamber === bulletInChamber) {
-          return 'BANG!!!!!'
+        } else if (this.state.chamber === this.props.bulletInChamber) {
+          return '<h2>BANG!!!!</h2>'
         } else {
-          return `SAFE!`
+          return `You're alive for now`
         }
       }
+
+      componentWillUnmount() {
+        clearTimeout(this.timeout)
+    }
+    
 
     render() {
         return (
@@ -105,4 +109,49 @@ class Roulette extends React.Component {
 
 
 
-export default Roulette;
+class Accordion extends React.Component {
+    static defaultProps = {
+        sections: [{
+            title: 'Section 1',
+            content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+          },
+          {
+            title: 'Section 2',
+            content: 'Cupiditate tenetur aliquam necessitatibus id distinctio quas nihil ipsam nisi modi!',
+          },
+          {
+            title: 'Section 3',
+            content: 'Animi amet cumque sint cupiditate officia ab voluptatibus libero optio et?',
+          }]
+    }
+    state = { 
+        currentIndex: 0
+    }
+
+    // update the state with new index
+    handleClick = (index) =>  {
+        this.setState({ currentIndex: {index}})
+        console.log(index);
+    }
+
+    render() {
+        const currentSection = this.props.sections[this.state.currentIndex]
+        const listItem = this.props.sections.map((sections, index) => (
+            <li><button key={index} onClick={this.handleClick(index)}>
+                <p>{sections.title}</p>
+                </button>       
+            </li>
+        ))
+
+        return (
+            <ul className='accordion' id='root'>
+                {listItem}
+                <p>{currentSection.content}</p> 
+            </ul>
+        )
+    }
+}
+
+export default Accordion;
+
+
